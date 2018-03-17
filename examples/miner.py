@@ -9,6 +9,12 @@ LOCATIONS = file.readlines()
 
 
 def get_places(location):
+    '''
+    Take a location, make a request to Foursquare and create list with
+    all places from this city
+    :param location: str
+    :return: str, int, list
+    '''
     added = 0
     offset = 0
     limit = 50
@@ -47,6 +53,11 @@ def get_places(location):
 
 
 def write_in_file(items):
+    '''
+    Writes in csv file all places in the city
+    :param items: list
+    :return: None
+    '''
     with open('places.csv', "w", newline='', encoding="utf-8") as csv_file:
         writer = csv.writer(csv_file, delimiter=',', quotechar='"',
                             quoting=csv.QUOTE_ALL)
