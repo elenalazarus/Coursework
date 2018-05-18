@@ -32,22 +32,25 @@ def get_places(location):
             if section is not None:
                 params['section'] = section
 
-            data = urllib.parse.urlencode(params)
-            req = urllib.request.urlopen(url + "?" + data)
-            res = json.loads(req.read().decode('utf-8'))['response']
-            # print(res)
+            try:
+                data = urllib.parse.urlencode(params)
 
-            items = res['groups'][0]['items']
+                req = urllib.request.urlopen(url + "?" + data)
+                res = json.loads(req.read().decode('utf-8'))['response']
+                if res:
+                    items = res['groups'][0]['items']
 
-            for item in range(len(items)):
-                # print(res['groups'][0]['items'][item]['venue']['name'])
-                added += 1
-                all_items.append(
-                    res['groups'][0]['items'][item]['venue']['name'])
-            if limit - offset <= 0:
-                break
-            else:
-                offset += limit
+                    for item in range(len(items)):
+                        # print(res['groups'][0]['items'][item]['venue']['name'])
+                        added += 1
+                        all_items.append(
+                            [res['groups'][0]['items'][item]['venue']['name'], res['groups'][0]['items'][item]['venue']['id']])
+                    if limit - offset <= 0:
+                        break
+                    else:
+                        offset += limit
+            except:
+                pass
 
     return location, added, all_items
 
@@ -67,6 +70,6 @@ def write_in_file(items):
 
 
 if __name__ == "__main__":
-    data = get_places('Львів, Україна')
+    data = get_places('Lviv')
     items = data[2]
     write_in_file(items)

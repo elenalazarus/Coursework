@@ -1,11 +1,16 @@
 import urllib.request, urllib.parse, urllib.error
 import json
-import time
+import sqlite3
 from miner import get_places
 
 from settings import CLIENT_ID, CLIENT_SECRET
 
+# conn = sqlite3.connect('oop_reviews.sqlite')
+# cur = conn.cursor()
 
+# cur.execute('DROP TABLE IF EXISTS Counts')
+
+# cur.execute('''CREATE TABLE Counts (review TEXT, count INTEGER)''')
 class Review:
     """
     Search and print all reviews
@@ -65,16 +70,28 @@ class Review:
                 tips = res['tips']['items']
                 for tip in tips:
                     all_reviews.append(tip['text'])
+                    # cur.execute('SELECT count FROM Counts WHERE review = ?', (tip['text'],))
+                    # row = cur.fetchone()
+                    # if row is None:
+                        # cur.execute('''INSERT INTO Counts (review, count) VALUES (?, 1)''', (tip['text'],))
+                    # else:
+                        # cur.execute('UPDATE Counts SET count = count + 1 WHERE review = ?', (tip['text'],))
+                    # conn.commit()
                 # Reading all comments...
+
                 if total - offset <= 0:
                     break
                 else:
                     offset += limit
+                # sqlstr = 'SELECT review, count FROM Counts ORDER BY count DESC LIMIT 10'
+                # for row in cur.execute(sqlstr):
+                    # print(str(row[0]), row[1])
         # Printing...
         for review in all_reviews:
             print(review)
+        # cur.close()
         return all_reviews
 
 
-a = Review("КебабШеф")
+a = Review("Bubble Waffle")
 a.get_reviews()
