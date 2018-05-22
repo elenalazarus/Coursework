@@ -1,6 +1,0 @@
-З 16 - 22 квітня був пройдений туторіал
-https://www.coursera.org/learn/python-databases.
-Цього не було достатньо для розуміння всього
-необхідного для створення бази даних, тож
-було вирішено пройти ще один туторіал
-https://www.pythoncentral.io/introductory-tutorial-python-sqlalchemy/
